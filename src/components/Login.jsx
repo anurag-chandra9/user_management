@@ -19,6 +19,7 @@ const Login = () => {
   const [password, setPassword] = useState('cityslicka');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -49,31 +50,82 @@ const Login = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          background: 'linear-gradient(45deg, #f3f4f6 30%, #ffffff 90%)',
         }}
       >
         <Paper
-          elevation={3}
+          elevation={6}
           sx={{
             p: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            borderRadius: 2,
+            borderRadius: 3,
             width: '100%',
+            background: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(10px)',
+            transition: 'transform 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.02)',
+            },
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-            <LockOutlinedIcon />
+          <Avatar 
+            sx={{ 
+              m: 1, 
+              bgcolor: 'primary.main',
+              width: 56,
+              height: 56,
+              transform: 'rotate(0deg)',
+              transition: 'transform 0.3s ease-in-out',
+              '&:hover': {
+                transform: 'rotate(360deg)',
+              },
+            }}
+          >
+            <LockOutlinedIcon sx={{ fontSize: 30 }} />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+          <Typography 
+            component="h1" 
+            variant="h4" 
+            sx={{ 
+              mb: 3,
+              fontWeight: 600,
+              background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+              backgroundClip: 'text',
+              textFillColor: 'transparent',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
             Welcome Back
           </Typography>
           {error && (
-            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+            <Alert 
+              severity="error" 
+              sx={{ 
+                width: '100%', 
+                mb: 2,
+                borderRadius: 2,
+                animation: 'shake 0.5s',
+                '@keyframes shake': {
+                  '0%, 100%': { transform: 'translateX(0)' },
+                  '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' },
+                  '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' },
+                }
+              }}
+            >
               {error}
             </Alert>
           )}
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
+          <Box 
+            component="form" 
+            onSubmit={handleSubmit} 
+            sx={{ 
+              mt: 1, 
+              width: '100%',
+            }}
+          >
             <TextField
               margin="normal"
               required
@@ -85,9 +137,20 @@ const Login = () => {
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              sx={{ mb: 2 }}
-              InputProps={{
-                sx: { borderRadius: 2 }
+              sx={{
+                mb: 2,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                  },
+                  '&.Mui-focused': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                  }
+                }
               }}
             />
             <TextField
@@ -96,14 +159,25 @@ const Login = () => {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              sx={{ mb: 3 }}
-              InputProps={{
-                sx: { borderRadius: 2 }
+              sx={{
+                mb: 3,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                  },
+                  '&.Mui-focused': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                  }
+                }
               }}
             />
             <Button
@@ -112,24 +186,22 @@ const Login = () => {
               variant="contained"
               disabled={loading}
               sx={{
-                mt: 1,
+                mt: 2,
                 mb: 2,
                 py: 1.5,
                 borderRadius: 2,
-                position: 'relative'
+                fontSize: '1.1rem',
+                textTransform: 'none',
+                background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                transition: 'all 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 8px 16px rgba(33,150,243,0.3)',
+                }
               }}
             >
               {loading ? (
-                <CircularProgress
-                  size={24}
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    marginTop: '-12px',
-                    marginLeft: '-12px',
-                  }}
-                />
+                <CircularProgress size={24} color="inherit" />
               ) : (
                 'Sign In'
               )}
