@@ -71,4 +71,4 @@ The application uses the following endpoints from Reqres API (https://reqres.in/
 - DELETE /api/users/{id} - Delete user
   
 ## Deployment Link
--https://user-management1-sage.vercel.app/users
+-https://user-management1-sage.vercel.app/
